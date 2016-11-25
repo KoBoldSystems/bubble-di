@@ -1,5 +1,4 @@
-/*import {shallow} from 'enzyme';*/
-import {expect} from "chai";
+import { expect } from "chai";
 import DiContainer from "../src/index";
 
 class Child1Service {
@@ -95,33 +94,33 @@ class CycleDependencyRoot {
 }
 
 describe("DependencyResolver", () => {
-    let diContainer = DiContainer.getContainer();
+    const diContainer = DiContainer.getContainer();
     it("it should be capable of registering and locating dependencies with nested dependencies", () => {
 
         expect(diContainer).to.not.be.undefined;
 
-        diContainer.register("Child1Service", {dependencies: [], factoryMethod: () => new Child1Service()});
+        diContainer.register("Child1Service", { dependencies: [], factoryMethod: () => new Child1Service() });
         diContainer.register("Child2Service", {
             dependencies: ["Child3Service"],
-            factoryMethod: (child3Service) => new Child2Service(child3Service)}
+            factoryMethod: child3Service => new Child2Service(child3Service) },
         );
-        diContainer.register("Child3Service", {dependencies: [], factoryMethod: () => new Child3Service()});
+        diContainer.register("Child3Service", { dependencies: [], factoryMethod: () => new Child3Service() });
         diContainer.register("Child4Service", {
             dependencies: ["Child3Service", "Child5Service"],
             factoryMethod: (child3Service, child5Service) => new Child4Service(child3Service, child5Service),
         });
-        diContainer.register("Child5Service", {dependencies: [], factoryMethod: () => new Child5Service()});
+        diContainer.register("Child5Service", { dependencies: [], factoryMethod: () => new Child5Service() });
         diContainer.register("TestService", {
             dependencies: ["Child1Service", "Child2Service"],
-            factoryMethod: (child1Service, child2Service) => new TestService(child1Service, child2Service)}
+            factoryMethod: (child1Service, child2Service) => new TestService(child1Service, child2Service) },
         );
 
         expect(diContainer.resolve("Child1Service")).to.not.be.undefined;
 
-        let  testService = diContainer.resolve("TestService");
+        const testService = diContainer.resolve("TestService");
         expect(testService.testMethod()).to.equal("child1-child2-child3");
 
-        let  child4Service = diContainer.resolve("Child4Service");
+        const child4Service = diContainer.resolve("Child4Service");
         expect(child4Service.childMethod()).to.equal("I am child4 and i have child5 and my base class has child2-child3");
     });
 
@@ -135,7 +134,7 @@ describe("DependencyResolver", () => {
     });
 
     it("it should throw an error for not found dependencies", () => {
-        expect(() => {diContainer.resolve("NotRegistered"); }).to.throw(Error);
+        expect(() => { diContainer.resolve("NotRegistered"); }).to.throw(Error);
     });
 
 
@@ -145,32 +144,32 @@ describe("DependencyResolver", () => {
             "CycleDependencyRoot",
             {
                 dependencies: ["CycleDependency2"],
-                factoryMethod: (cycleDependency2) => new CycleDependencyRoot(cycleDependency2),
-            }
+                factoryMethod: cycleDependency2 => new CycleDependencyRoot(cycleDependency2),
+            },
         );
         diContainer.register(
             "CycleDependency2",
             {
                 dependencies: ["CycleDependency3"],
-                factoryMethod: (cycleDependency3) => new CycleDependency2(cycleDependency3),
-            }
+                factoryMethod: cycleDependency3 => new CycleDependency2(cycleDependency3),
+            },
         );
         diContainer.register(
             "CycleDependency3",
             {
                 dependencies: ["CycleDependency2"],
-                factoryMethod: (cycleDependency2) => new CycleDependency3(cycleDependency2),
-            }
+                factoryMethod: cycleDependency2 => new CycleDependency3(cycleDependency2),
+            },
         );
 
-        expect(() => {diContainer.resolve("CycleDependencyRoot"); }).to.throw(Error);
+        expect(() => { diContainer.resolve("CycleDependencyRoot"); }).to.throw(Error);
     });
 
 
 
     it("it should call onResolved in subTypes after resolving a dependency", () => {
-        let c = new MyDiContainer();
-        c.register("Child3Service", {factoryMethod: () => new Child3Service()});
+        const c = new MyDiContainer();
+        c.register("Child3Service", { factoryMethod: () => new Child3Service() });
         expect(c.getCalled()).to.be.false;
         c.resolve("Child3Service");
         expect(c.getCalled()).to.be.true;

@@ -1,6 +1,7 @@
 /**
  * DiContainer is a dependency injection container.
- * You can derive it and override onResolved to post-process dependencies after they have been resolved (i.e. to inject some form of context). 
+ * You can derive it and override onResolved to post-process dependencies after
+ * they have been resolved (i.e. to inject some form of context).
  */
 export default class DiContainer {
     static diContainerInstance;
@@ -11,7 +12,7 @@ export default class DiContainer {
         return DiContainer.diContainerInstance;
     }
 
-    registry;   
+    registry;
 
     constructor() {
         this.registry = [];
@@ -20,12 +21,13 @@ export default class DiContainer {
     /**
      * Registers a dependency.
      * Example:
-     *   DiContainer.getContainer().register("MyService", {
-     *       dependencies: ["OtherService", "ThirdService"],
-     *       factoryMethod: (otherService, thirdService) => new MyService(otherService, thirdService)}
-     *   );
+     * DiContainer.getContainer().register("MyService", {
+     *     dependencies: ["OtherService", "ThirdService"],
+     *     factoryMethod: (otherService, thirdService) => new MyService(otherService, thirdService)}
+     * );
      * @param id The unique id for the dependency to be registered
-     * @param typeInfo typeinfo object containing dependencies and factorymethod {dependencies?, factoryMethod: (...dependenciesInOrder)}
+     * @param typeInfo typeinfo object containing dependencies and factorymethod
+     * {dependencies?, factoryMethod: (...dependenciesInOrder)}
      */
     register(id, typeInfo) {
         this.registry[id.toLowerCase()] = typeInfo;
@@ -39,7 +41,7 @@ export default class DiContainer {
      * @param instance The instance to be registered.
      */
     registerInstance(id, instance) {
-        this.register(id, {factoryMethod: () => instance });
+        this.register(id, { factoryMethod: () => instance });
     }
 
     /** Resolves a dependecy registered under given id
@@ -47,13 +49,14 @@ export default class DiContainer {
      * @param recursionPath (Internal) Array of visited dependencies used for cycle detection
      */
     resolve(id, recursionPath = []) {
-        id = id.toLowerCase();
-        this.checkCycles(id, recursionPath);
-        const typeInfo = this.registry[id];
-        if (typeInfo === undefined) { throw new Error(`no dependency registered for id '${id}'`); }
-        const dependencies = this.resolveMany(typeInfo.dependencies, [id, ...recursionPath]);
+        const idToResolve = id.toLowerCase();
+        this.checkCycles(idToResolve, recursionPath);
+        const typeInfo = this.registry[idToResolve];
+        if (typeInfo === undefined) { throw new Error(`no dependency registered for id '${idToResolve}'`); }
+        const dependencies =
+            this.resolveMany(typeInfo.dependencies, [idToResolve, ...recursionPath]);
         const instance = typeInfo.factoryMethod(...dependencies);
-        this.onResolved(id, instance);
+        this.onResolved(idToResolve, instance);
         return instance;
     }
 
@@ -63,7 +66,7 @@ export default class DiContainer {
      * @param recursionPath (Internal) Array of visited dependencies used for cycle detection
      */
     resolveMany(ids, recursionPath = []) {
-        if (!ids) {return []; }
+        if (!ids) { return []; }
         const dependencies = [];
         ids.forEach(id => dependencies.push(this.resolve(id.toLowerCase(), [...recursionPath])));
         return dependencies;
@@ -71,15 +74,19 @@ export default class DiContainer {
 
     checkCycles(id, recursionPath) {
         if (!id || !recursionPath) { return; }
-        recursionPath.forEach(previousId => {
+        recursionPath.forEach((previousId) => {
             if (previousId === id) {
                 throw new Error(`Dependency cycle detected: actual dependency being resolved: '${id}', recursionPath '${recursionPath}'`);
             }
         });
     }
 
-    /* override to do stuff after dependency has been resolved */
+    /* eslint-disable  no-unused-vars */
+    /**
+     * override this method to do stuff after dependency has been resolved
+     * */
     onResolved(id, resolvedInstance) { }
+    /* eslint-enable  no-unused-vars */
 }
 
 export function resetDiContainer(diContainerInstance = new DiContainer()) {

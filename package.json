@@ -4,11 +4,13 @@
   "description": "A  simple Dependency Injection Container for Javascript.",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
+  "typings": "./index.d.ts",
   "files": [
     "lib",
     "es",
     "src",
-    "dist"
+    "dist",
+    "index.d.ts"
   ],
   "scripts": {
     "clean": "rimraf lib dist es",
@@ -63,7 +65,7 @@
     "chai": "^3.5.0",
     "cross-env": "^3.1.3",
     "eslint": "^3.10.2",
-    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb-base": "^10.0.1",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.1",
     "mocha": "^3.1.2",
