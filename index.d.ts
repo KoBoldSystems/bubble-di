@@ -2,13 +2,14 @@
 // Project: bubble-di
 // Definitions by: Kobold Group http://kobold.com.au
 
-export = DiContainer;
+export = bubbleDi;
 
+declare namespace bubbleDi {
 /**
  * DiContainer is a dependency injection container.
  * You can derive it and override onResolved to post-process dependencies after they have been resolved (i.e. to inject some form of context). 
  */
-declare class DiContainer {
+class DiContainer {
     constructor();
     /**
      * gets the DiContainer instance
@@ -29,7 +30,7 @@ declare class DiContainer {
      * @param id The unique id for the dependency to be registered
      * @param typeInfo typeinfo object containing dependencies and factorymethod {dependencies?, factoryMethod: (...dependenciesInOrder)}
      */
-    register(id: string, typeInfo: DiContainer.TypeInfo): void;
+    register(id: string, typeInfo: TypeInfo): void;
 
     /**
      * Registers an instance as a dependency.
@@ -53,8 +54,6 @@ declare class DiContainer {
      */
     resolveMany(ids: string[]): any[];
 }
-
-declare namespace DiContainer {
     /**
      * A TypeInfo contains information for resolving a dependencies including it's dependecy graph.
      * it is composed of two properties: dependencies and factoryMethod.
