@@ -3,7 +3,7 @@
  * You can derive it and override onResolved to post-process dependencies after
  * they have been resolved (i.e. to inject some form of context).
  */
-export default class DiContainer {
+export class DiContainer {
     static diContainerInstance;
     static setContainer(container) {
         DiContainer.diContainerInstance = container;
@@ -87,12 +87,4 @@ export default class DiContainer {
      * */
     onResolved(id, resolvedInstance) { }
     /* eslint-enable  no-unused-vars */
-}
-
-export function resetDiContainer(diContainerInstance = new DiContainer()) {
-    DiContainer.setContainer(diContainerInstance);
-}
-
-if (DiContainer.getContainer() === undefined) {
-    resetDiContainer(new DiContainer());
 }

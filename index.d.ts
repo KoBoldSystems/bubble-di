@@ -1,4 +1,4 @@
-// Type definitions for bubble-di 0.0.1
+// Type definitions for bubble-di
 // Project: bubble-di
 // Definitions by: Kobold Group http://kobold.com.au
 

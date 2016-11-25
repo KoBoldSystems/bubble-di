@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import DiContainer from "../src/index";
+import { DiContainer } from "../src/index";
 
 class Child1Service {
     childMethod() {
@@ -94,7 +94,7 @@ class CycleDependencyRoot {
 }
 
 describe("DependencyResolver", () => {
-    const diContainer = DiContainer.getContainer();
+    const diContainer = new DiContainer();
     it("it should be capable of registering and locating dependencies with nested dependencies", () => {
 
         expect(diContainer).to.not.be.undefined;
