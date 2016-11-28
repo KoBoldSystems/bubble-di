@@ -1,6 +1,6 @@
 {
   "name": "bubble-di",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "A  simple Dependency Injection Container for Javascript and Typescript",
   "main": "lib/index.js",
   "jsnext:main": "es/index.js",
@@ -34,7 +34,7 @@
     "dependency",
     "injection"
   ],
-  "author": "Benjamin Meyer <bn.meyer@gmail.com>",
+  "author": "Benjamin Meyer <ben.in.queensland@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.18.0",

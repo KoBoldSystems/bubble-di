@@ -20,14 +20,14 @@ var {DiContainer} = require("bubble-di");
 DiContainer.setContainer(new DiContainer());
 
 DiContainer.getContainer().registerInstance("foo", () => {console.log("foo");});
-const barFunc = DiContainer.getContainer().resolve("foo");
-barFunc(); // prints 'foo'
+const fooFunc = DiContainer.getContainer().resolve("foo");
+fooFunc(); // prints 'foo'
 
-class Bar { sayFoo() {console.log("bar");}}
+class Bar { sayBar() {console.log("bar");}}
 
 DiContainer.getContainer().registerInstance("bar", new Bar());
-const foo = DiContainer.getContainer().resolve("bar");
-foo.sayFoo(); // prints 'bar'
+const bar = DiContainer.getContainer().resolve("bar");
+bar.sayBar(); // prints 'bar'
 ```
 
 #### Transitive dependencies
@@ -69,7 +69,7 @@ class MyDiContainer extends DiContainer {
     }
 }
 
-DiContainer.setContainer(new DiContainer());
+DiContainer.setContainer(new MyDiContainer ());
 DiContainer.getContainer().registerInstance("foo", {});
 DiContainer.getContainer().resolve("foo"); // will print "id being resolved: 'foo'"
 ```
