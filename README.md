@@ -4,6 +4,8 @@ bubble-di
 A simple, Dependecy Injection Container for Javascript and Typescript.
 Typings included.
 
+[![build status](https://travis-ci.org/KoBoldSystems/bubble-di.svg?branch=master)](https://travis-ci.org/KoBoldSystems/bubble-di) 
+
 **Installation**
 
 ```
