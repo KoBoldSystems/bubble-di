@@ -12,7 +12,7 @@ npm install --save bubble-di
 
 **How does it work?**
 
-#### Simple example
+##### Simple example
 ```javascript
 var {DiContainer} = require("bubble-di");
 // import { DiContainer } from "bubble-di";
@@ -30,7 +30,7 @@ const bar = DiContainer.getContainer().resolve("bar");
 bar.sayBar(); // prints 'bar'
 ```
 
-#### Transitive dependencies
+##### Transitive dependencies
 ```javascript
 var {DiContainer} = require("bubble-di");
 // import { DiContainer } from "bubble-di";
@@ -57,7 +57,7 @@ DiContainer.getContainer().register("foo", {
 const foo = DiContainer.getContainer().resolve("foo"); // will print "bar" and "baz".
 ```
 
-#### Deriving the DiContainer to postprocess dependencies after being resolved
+##### Deriving the DiContainer to postprocess dependencies after being resolved
 ```javascript
 var {DiContainer} = require("bubble-di");
 // import { DiContainer } from "bubble-di";
