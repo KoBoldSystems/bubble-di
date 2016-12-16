@@ -12,7 +12,7 @@ const plugins = [
 
 const filename = `bubble-di${NODE_ENV === 'production' ? '.min' : ''}.js`;
 
-NODE_ENV === 'production'  && plugins.push(
+NODE_ENV === 'production' && plugins.push(
   new webpack.optimize.UglifyJsPlugin({
     compressor: {
       pure_getters: true,
@@ -21,7 +21,7 @@ NODE_ENV === 'production'  && plugins.push(
       screw_ie8: true,
       warnings: false,
     },
-  })
+  }),
 );
 
 export default {

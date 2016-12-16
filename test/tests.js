@@ -93,7 +93,7 @@ class CycleDependencyRoot {
     }
 }
 
-describe("DependencyResolver", () => {
+describe("DiContainer", () => {
     const diContainer = new DiContainer();
     it("it should be capable of registering and locating dependencies with nested dependencies", () => {
 
@@ -173,6 +173,13 @@ describe("DependencyResolver", () => {
         expect(c.getCalled()).to.be.false;
         c.resolve("Child3Service");
         expect(c.getCalled()).to.be.true;
+    });
+
+    it("contains should return true, if a dependency with the given id is registered, false otherwise.", () => {
+        const dic = new DiContainer();
+        dic.registerInstance("foo", {});
+        expect(dic.containsDependency("foo")).to.be.true;
+        expect(dic.containsDependency("bar")).to.be.fale;
     });
 });
 

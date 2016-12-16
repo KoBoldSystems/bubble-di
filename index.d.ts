@@ -53,6 +53,13 @@ class DiContainer {
      * @param recursionPath (Internal) Array of visited dependencies used for cycle detection
      */
     resolveMany(ids: string[]): any[];
+
+    /**
+     * Tests if a dependency is registered.
+     * @param id  The unique id for the dependency.
+     * @returns true, if dependency with given id is registered, false otherwise.
+     */
+    containsDependency(id: string): boolean;
 }
     /**
      * A TypeInfo contains information for resolving a dependencies including it's dependecy graph.

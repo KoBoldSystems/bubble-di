@@ -72,6 +72,16 @@ export class DiContainer {
         return dependencies;
     }
 
+    /**
+     * Tests if a dependency is registered.
+     * @param id  The unique id for the dependency.
+     * @returns true, if dependency with given id is registered, false otherwise.
+     */
+    containsDependency(id) {
+        const result = this.registry[id.toLowerCase()];
+        return result !== undefined;
+    }
+
     checkCycles(id, recursionPath) {
         if (!id || !recursionPath) { return; }
         recursionPath.forEach((previousId) => {
